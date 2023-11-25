@@ -1,9 +1,10 @@
-import { Header } from "@components/organisms";
+import { ContactsList, Header } from "@components/organisms";
 
 export const App = () => {
   return (
-    <div className="container">
+    <div className="container flex flex-col gap-12">
       <Header />
+      <ContactsList />
     </div>
   );
 };
