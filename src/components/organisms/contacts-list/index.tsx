@@ -1,7 +1,14 @@
-export const ContactsList = () => {
+import { ContactActions } from "@components/molecules";
+
+type ContactListProps = React.DetailedHTMLProps<
+  React.HTMLAttributes<HTMLElement>,
+  HTMLElement
+>;
+
+export const ContactsList = (props: ContactListProps) => {
   return (
-    <main>
-      <div className="overflow-x-auto">
+    <main {...props}>
+      <div className="overflow-x-auto h-full">
         <table className="table table-zebra">
           {/* head */}
           <thead>
@@ -11,6 +18,7 @@ export const ContactsList = () => {
               <th>E-mail</th>
               <th>Celular</th>
               <th>Endereço</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -39,6 +47,9 @@ export const ContactsList = () => {
                   <p>14403-169</p>
                 </div>
               </td>
+              <td>
+                <ContactActions />
+              </td>
             </tr>
             {/* row 2 */}
             <tr>
@@ -65,6 +76,9 @@ export const ContactsList = () => {
                   <p>14403-169</p>
                 </div>
               </td>
+              <td>
+                <ContactActions />
+              </td>
             </tr>
             {/* row 3 */}
             <tr>
@@ -90,6 +104,9 @@ export const ContactsList = () => {
                   <p>Franca - SP</p>
                   <p>14403-169</p>
                 </div>
+              </td>
+              <td>
+                <ContactActions />
               </td>
             </tr>
           </tbody>

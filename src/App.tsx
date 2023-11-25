@@ -2,9 +2,9 @@ import { ContactsList, Header } from "@components/organisms";
 
 export const App = () => {
   return (
-    <div className="container flex flex-col gap-12">
+    <div className="container flex flex-col gap-12 h-screen">
       <Header />
-      <ContactsList />
+      <ContactsList className="flex-1" />
     </div>
   );
 };
