@@ -1,5 +1,5 @@
 import { Button } from "@components/atoms";
-import { Modal, SearchBar } from "@components/molecules";
+import { Modal, SearchBar, ThemeController } from "@components/molecules";
 import { Plus } from "phosphor-react";
 import { useRef } from "react";
 
@@ -8,7 +8,10 @@ export const Header = () => {
 
   return (
     <header>
-      <h1 className="text-4xl my-8 font-bold">Contatos</h1>
+      <div className="py-8 flex justify-between">
+        <h1 className="text-4xl font-bold">Contatos</h1>
+        <ThemeController />
+      </div>
       <div className="flex justify-between">
         <SearchBar placeholder="Buscar contatos..." className="w-3/6" />
         <Button
