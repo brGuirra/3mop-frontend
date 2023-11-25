@@ -12,7 +12,7 @@ export const SearchBar = ({
   return (
     <div className={`relative ${className}`} {...rest}>
       <div className="text-gray-600 absolute inset-y-0 start-0 flex items-center ps-2 pointer-events-none">
-        <MagnifyingGlass size={24} weight="bold" />
+        <MagnifyingGlass size={20} weight="bold" />
       </div>
       <input
         type="search"

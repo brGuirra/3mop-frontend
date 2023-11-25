@@ -1,4 +1,4 @@
-import { Header } from "./components";
+import { Header } from "@components/organisms";
 
 export const App = () => {
   return (

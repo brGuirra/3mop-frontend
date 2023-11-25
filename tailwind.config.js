@@ -4,11 +4,10 @@ export default {
   theme: {
     container: {
       center: true,
-      padding: {
-        desktop: "1.5rem",
-      },
+      padding: "1.5rem",
       screens: {
-        desktop: "1440px",
+        sm: "768px",
+        lg: "1440px",
       },
     },
     extend: {

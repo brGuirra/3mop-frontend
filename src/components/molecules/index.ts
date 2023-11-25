@@ -1,1 +1,3 @@
-export * from './search-bar';
+export * from "./new-contact-form";
+export * from "./modal";
+export * from "./search-bar";
