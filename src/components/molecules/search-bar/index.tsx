@@ -15,6 +15,7 @@ export const SearchBar = ({
         <MagnifyingGlass size={20} weight="bold" />
       </div>
       <input
+        id="searchBar"
         type="search"
         className="input input-bordered w-full max-w-xs block p-4 ps-10"
         placeholder={placeholder}

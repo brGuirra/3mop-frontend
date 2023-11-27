@@ -1,16 +1,27 @@
 import { Button } from "@components/atoms";
+import { useContacts } from "hooks";
 import { DotsThree, PencilSimple, TrashSimple } from "phosphor-react";
 
-export const ContactActions = () => {
+type ContactActionProps = {
+  contact: API.Contact;
+};
+
+export const ContactActions = ({ contact }: ContactActionProps) => {
+  const { deleteContact } = useContacts();
+
+  const handleDelete = async (contactId: string) => {
+    await deleteContact(contactId);
+  };
+
   return (
     <div className="dropdown dropdown-hover dropdown-end">
-      <label
+      <div
         tabIndex={0}
         className="m-1 btn btn-ghost"
         aria-label="Edit or delete contact"
       >
         <DotsThree weight="bold" size={20} />
-      </label>
+      </div>
       <ul
         tabIndex={0}
         className="shadow menu dropdown-content z-[1] bg-base-300 rounded-lg w-52"
@@ -29,6 +40,7 @@ export const ContactActions = () => {
             <Button
               className="btn-ghost flex flex-1 justify-start"
               text="Excluir"
+              onClick={() => handleDelete(contact.id)}
               icon={<TrashSimple weight="bold" size={20} />}
             />
           </div>

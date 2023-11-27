@@ -1,22 +1,23 @@
 import { Moon, Sun } from "phosphor-react";
 import { useEffect, useState } from "react";
-import { themeChange } from "theme-change";
 
 export const ThemeController = () => {
   const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
-    themeChange(false);
+    const isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
-    const theme = localStorage.getItem("theme");
-
-    document.documentElement.setAttribute("data-theme", theme || "light");
-
-    setIsDark(theme === "dark");
+    setIsDark(isDark);
   }, []);
 
   const handleThemeChange = () => {
-    themeChange(true);
+    const currentTheme = document.documentElement.getAttribute("data-theme");
+
+    if (currentTheme === "light") {
+      document.documentElement.setAttribute("data-theme", "dark");
+    } else {
+      document.documentElement.setAttribute("data-theme", "light");
+    }
 
     setIsDark(!isDark);
   };
@@ -25,11 +26,11 @@ export const ThemeController = () => {
     <label className="flex cursor-pointer gap-2">
       <Sun weight="bold" size={20} />
       <input
+        id="themeController"
         type="checkbox"
         value="synthwave"
         checked={isDark}
         onChange={() => handleThemeChange()}
-        data-toggle-theme="light,dark"
         className="toggle theme-controller"
       />
       <Moon weight="bold" size={20} />

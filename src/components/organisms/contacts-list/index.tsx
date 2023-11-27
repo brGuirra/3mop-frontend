@@ -1,4 +1,5 @@
 import { ContactActions } from "@components/molecules";
+import { useContacts } from "hooks";
 
 type ContactListProps = React.DetailedHTMLProps<
   React.HTMLAttributes<HTMLElement>,
@@ -6,112 +7,76 @@ type ContactListProps = React.DetailedHTMLProps<
 >;
 
 export const ContactsList = (props: ContactListProps) => {
+  const { contacts } = useContacts();
+
   return (
     <main {...props}>
-      <div className="overflow-x-auto h-full">
-        <table className="table table-zebra">
-          {/* head */}
-          <thead>
-            <tr>
-              <th></th>
-              <th>Nome</th>
-              <th>E-mail</th>
-              <th>Celular</th>
-              <th>Endereço</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {/* row 1 */}
-            <tr>
-              <th>1</th>
-              <td>Bruno Guirra</td>
-              <td>
-                <a
-                  href="mailto:br.guirra@email.com"
-                  target="_blank"
-                  className="link"
-                >
-                  br.guirra@email.com
-                </a>
-              </td>
-              <td>
-                <a href="tel:16992186636" className="link">
-                  16 99218-6636
-                </a>
-              </td>
-              <td>
-                <div>
-                  <p>Rua Lauro Reis, 1579 - Vila Marta</p>
-                  <p>Franca - SP</p>
-                  <p>14403-169</p>
-                </div>
-              </td>
-              <td>
-                <ContactActions />
-              </td>
-            </tr>
-            {/* row 2 */}
-            <tr>
-              <th>2</th>
-              <td>Bruno Guirra</td>
-              <td>
-                <a
-                  href="mailto:br.guirra@email.com"
-                  target="_blank"
-                  className="link"
-                >
-                  br.guirra@email.com
-                </a>
-              </td>
-              <td>
-                <a href="tel:16992186636" className="link">
-                  16 99218-6636
-                </a>
-              </td>
-              <td>
-                <div>
-                  <p>Rua Lauro Reis, 1579 - Vila Marta</p>
-                  <p>Franca - SP</p>
-                  <p>14403-169</p>
-                </div>
-              </td>
-              <td>
-                <ContactActions />
-              </td>
-            </tr>
-            {/* row 3 */}
-            <tr>
-              <th>3</th>
-              <td>Bruno Guirra</td>
-              <td>
-                <a
-                  href="mailto:br.guirra@email.com"
-                  target="_blank"
-                  className="link"
-                >
-                  br.guirra@email.com
-                </a>
-              </td>
-              <td>
-                <a href="tel:16992186636" className="link">
-                  16 99218-6636
-                </a>
-              </td>
-              <td>
-                <div>
-                  <p>Rua Lauro Reis, 1579 - Vila Marta</p>
-                  <p>Franca - SP</p>
-                  <p>14403-169</p>
-                </div>
-              </td>
-              <td>
-                <ContactActions />
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      {contacts && contacts?.length > 0 ? (
+        <div className="overflow-x-auto h-full">
+          <table className="table table-zebra">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>Celular</th>
+                <th>Endereço</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {contacts.map((contact, index) => {
+                const {
+                  id,
+                  firstName,
+                  lastName,
+                  email,
+                  cellphone,
+                  address: {
+                    street,
+                    streetAddress,
+                    buildingNumber,
+                    city,
+                    state,
+                    zipCode,
+                  },
+                } = contact;
+
+                return (
+                  <tr key={id}>
+                    <td>{index + 1}</td>
+                    <td>{`${firstName} ${lastName}`}</td>
+                    <td>
+                      <a
+                        href="mailto:br.guirra@email.com"
+                        target="_blank"
+                        className="link"
+                      >
+                        {email}
+                      </a>
+                    </td>
+                    <td>
+                      <a href="tel:16992186636" className="link">
+                        {cellphone}
+                      </a>
+                    </td>
+                    <td>
+                      <div>
+                        <p>{`${street}, ${buildingNumber} - ${streetAddress}`}</p>
+                        <p>{`${city} - ${state}`}</p>
+                        <p>{zipCode}</p>
+                      </div>
+                    </td>
+                    <td>
+                      <ContactActions contact={contact} />
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      ) : null}
     </main>
   );
 };

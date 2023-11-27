@@ -1,5 +1,9 @@
 import { Button } from "@components/atoms";
-import { Modal, SearchBar, ThemeController } from "@components/molecules";
+import {
+  NewContactForm,
+  SearchBar,
+  ThemeController,
+} from "@components/molecules";
 import { Plus } from "phosphor-react";
 import { useRef } from "react";
 
@@ -22,7 +26,7 @@ export const Header = () => {
           className="btn-primary"
         />
       </div>
-      <Modal ref={modalRef} />
+      <NewContactForm ref={modalRef} />
     </header>
   );
 };
