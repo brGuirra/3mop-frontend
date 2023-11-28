@@ -1,16 +1,18 @@
 import { ContactActions } from "@components/molecules";
 import { useContacts } from "hooks";
 
-type ContactListProps = React.DetailedHTMLProps<
-  React.HTMLAttributes<HTMLElement>,
-  HTMLElement
->;
+type ContactListProps = {
+  showContactForm: (contact?: API.Contact) => void;
+} & React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
 
-export const ContactsList = (props: ContactListProps) => {
+export const ContactsList = ({
+  showContactForm,
+  ...rest
+}: ContactListProps) => {
   const { contacts } = useContacts();
 
   return (
-    <main {...props}>
+    <main {...rest}>
       {contacts && contacts?.length > 0 ? (
         <div className="overflow-x-auto h-full">
           <table className="table table-zebra">
@@ -68,7 +70,10 @@ export const ContactsList = (props: ContactListProps) => {
                       </div>
                     </td>
                     <td>
-                      <ContactActions contact={contact} />
+                      <ContactActions
+                        contact={contact}
+                        onClick={() => showContactForm(contact)}
+                      />
                     </td>
                   </tr>
                 );

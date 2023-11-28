@@ -4,9 +4,12 @@ import { DotsThree, PencilSimple, TrashSimple } from "phosphor-react";
 
 type ContactActionProps = {
   contact: API.Contact;
-};
+} & React.DetailedHTMLProps<
+  React.ButtonHTMLAttributes<HTMLButtonElement>,
+  HTMLButtonElement
+>;
 
-export const ContactActions = ({ contact }: ContactActionProps) => {
+export const ContactActions = ({ contact, ...rest }: ContactActionProps) => {
   const { deleteContact } = useContacts();
 
   const handleDelete = async (contactId: string) => {
@@ -15,11 +18,7 @@ export const ContactActions = ({ contact }: ContactActionProps) => {
 
   return (
     <div className="dropdown dropdown-hover dropdown-end">
-      <div
-        tabIndex={0}
-        className="m-1 btn btn-ghost"
-        aria-label="Edit or delete contact"
-      >
+      <div tabIndex={0} className="m-1 btn btn-ghost" role="button">
         <DotsThree weight="bold" size={20} />
       </div>
       <ul
@@ -32,6 +31,7 @@ export const ContactActions = ({ contact }: ContactActionProps) => {
               className="btn-ghost flex flex-1 justify-start"
               text="Editar"
               icon={<PencilSimple weight="bold" size={20} />}
+              {...rest}
             />
           </div>
         </li>

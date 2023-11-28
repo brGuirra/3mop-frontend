@@ -1,4 +1,8 @@
-import { EmailAlreadyInUseError, UnexpectedError } from "errors";
+import {
+  ContactNotFound,
+  EmailAlreadyInUseError,
+  UnexpectedError,
+} from "errors";
 import useSWR from "swr";
 
 type NewContactInput = {
@@ -6,6 +10,10 @@ type NewContactInput = {
   onSuccess: () => void;
   onError: (error: unknown) => void;
 };
+
+type UpdateContactInput = {
+  contactId: string;
+} & NewContactInput;
 
 export const useContacts = () => {
   const BASE_URL = `${import.meta.env.VITE_API_BASE_URL}/v1/contacts`;
@@ -33,6 +41,8 @@ export const useContacts = () => {
     if (!res.ok) {
       if (res.status === 409) {
         onError(new EmailAlreadyInUseError());
+      } else if (res.status === 404) {
+        onError(new ContactNotFound());
       } else {
         onError(new UnexpectedError());
       }
@@ -45,13 +55,15 @@ export const useContacts = () => {
     }
   };
 
-  const updateContact = async (
-    contactId: string,
-    payload: API.UpdateContact,
-  ) => {
+  const updateContact = async ({
+    contactId,
+    payload,
+    onSuccess,
+    onError,
+  }: UpdateContactInput) => {
     if (!data) return;
 
-    await fetch(`${BASE_URL}/${contactId}`, {
+    const res = await fetch(`${BASE_URL}/${contactId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -59,15 +71,25 @@ export const useContacts = () => {
       body: JSON.stringify(payload),
     });
 
-    mutate(
-      data.map((contact) => {
-        if (contact.id === contactId) {
-          contact = { ...contact, ...payload };
-        }
+    if (!res.ok) {
+      if (res.status === 409) {
+        onError(new EmailAlreadyInUseError());
+      } else {
+        onError(new UnexpectedError());
+      }
+    } else {
+      mutate(
+        data.map((contact) => {
+          if (contact.id === contactId) {
+            return { ...payload, ...contact };
+          }
 
-        return contact;
-      }),
-    );
+          return contact;
+        }),
+      );
+
+      onSuccess();
+    }
   };
 
   const deleteContact = async (contactId: string) => {
