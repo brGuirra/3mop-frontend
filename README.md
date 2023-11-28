@@ -1,30 +1,42 @@
-# React + TypeScript + Vite
+# 3Mop Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Esta aplicação é o frontend de um gerenciador de contatos.
 
-Currently, two official plugins are available:
+## Requisitos
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Antes de tudo, recomenda-se que o [backend](https://github.com/brGuirra/3mop-backend) já esteja sendo executado localmente
+em sua máquina.
 
-## Expanding the ESLint configuration
+Além disso, para executar essa aplicação é necesário ter instalado a versão
+LTS do Node.js. A instalação do node pode ser feita seguindo passo à passo
+na [documentação](https://nodejs.org/en/download) para o seu sistema operacional.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Instruções para uso
 
-- Configure the top-level `parserOptions` property like this:
+Após clonar e accessar a pasta com o repositório em sem computador,o primeiro
+passo é criar um arquivo com as variáveis de ambiente da aplicação.
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+Em um máquina com Unix/Linux, rode o comando:
+
+```bash
+cp ./.env.example .env.local
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Em uma máquina com Windows, rode o comando:
+
+```bash
+copy .\.env.example .env.local
+```
+
+Em seguida deve ser feita a instalação das dependências com o comando:
+
+```bash
+npm install
+```
+
+Por fim, para executar a aplicação é preciso rodar o commando abaixo.
+O site ficará disponível em `http://localhost:5173`.
+
+```bash
+npm run dev
+```
