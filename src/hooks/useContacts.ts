@@ -18,7 +18,11 @@ type UpdateContactInput = {
 export const useContacts = () => {
   const BASE_URL = `${import.meta.env.VITE_API_BASE_URL}/v1/contacts`;
   const fecther = async (url: string) => {
-    return fetch(url).then<API.Contact[]>((res) => res.json());
+    return fetch(url, {
+      headers: {
+        "X-API-KEY": import.meta.env.VITE_BACKEND_API_KEY,
+      },
+    }).then<API.Contact[]>((res) => res.json());
   };
 
   const { data, isLoading, mutate, error } = useSWR(BASE_URL, fecther);
@@ -34,6 +38,7 @@ export const useContacts = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "X-API-KEY": import.meta.env.VITE_BACKEND_API_KEY,
       },
       body: JSON.stringify(payload),
     });
@@ -67,6 +72,7 @@ export const useContacts = () => {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        "X-API-KEY": import.meta.env.VITE_BACKEND_API_KEY,
       },
       body: JSON.stringify(payload),
     });
@@ -97,6 +103,9 @@ export const useContacts = () => {
 
     await fetch(`${BASE_URL}/${contactId}`, {
       method: "DELETE",
+      headers: {
+        "X-API-KEY": import.meta.env.VITE_BACKEND_API_KEY,
+      },
     });
 
     mutate(data.filter((contact) => contact.id === contactId));
